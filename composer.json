@@ -1,0 +1,25 @@
+{
+    "name": "alfian/indo-date-format",
+    "description": "Format tanggal Indonesia untuk Laravel",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Alfian\\IndoDateFormat\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "require": {
+        "php": "^8.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Alfian\\IndoDateFormat\\IndoDateServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

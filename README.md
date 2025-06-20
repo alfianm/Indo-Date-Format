@@ -1,72 +1,123 @@
-indo-date-format
+# indo-date-format
 
-Format tanggal Indonesia untuk Laravel
+[![Packagist Version](https://img.shields.io/packagist/v/alfian/indo-date-format.svg)](https://packagist.org/packages/alfian/indo-date-format)
+[![License](https://img.shields.io/packagist/l/alfian/indo-date-format.svg)](LICENSE)
+[![PHP Version](https://img.shields.io/packagist/php-v/alfian/indo-date-format.svg)](https://www.php.net)
 
-Package ini memudahkan kamu untuk mengubah tanggal dari format dd/mm/YYYY menjadi format DD MMMM YYYY (misalnya 01/01/2025 → 01 Januari 2025) dalam aplikasi Laravel.
+**Format tanggal Indonesia untuk Laravel**
 
-Fitur
+> Mengubah tanggal dari format `dd/mm/YYYY` menjadi format `DD MMMM YYYY` (misalnya `01/01/2025` → `01 Januari 2025`) dalam aplikasi Laravel.
 
-Konversi tanggal dd/mm/YYYY ke format DD MMMM YYYY berbahasa Indonesia.
+---
 
-Dependensi minimal: PHP 7.4+ / 8.0+.
+## 📋 Daftar Isi
 
-Mudah digunakan langsung pada kode atau via Facade/helper custom.
+- [Fitur](#-fitur)
+- [Instalasi](#-instalasi)
+- [Penggunaan](#-penggunaan)
+  - [1. Kelas Langsung](#1-kelas-langsung)
+  - [2. Helper Function](#2-helper-function)
+- [Konfigurasi (Opsional)](#-konfigurasi-opsional)
+- [Contributing](#contributing)
+- [Lisensi](#lisensi)
 
-Instalasi
+---
 
-Tambahkan repository path di proyek Laravel kamu (opsional jika pakai Packagist):
+## 🚀 Fitur
 
-"repositories": [
-    {
-        "type": "path",
-        "url": "./packages/alfian/indo-date-format"
-    }
-]
+- Konversi tanggal `dd/mm/YYYY` ke format `DD MMMM YYYY` berbahasa Indonesia.
+- Autodiscoverable di Laravel 5.5+.
+- Dukungan PHP 7.4, 8.0 ke atas.
 
-Require package via Composer:
+---
 
-composer require alfian/indo-date-format:dev-main
+## 🔧 Instalasi
 
-Jika paket sudah ada di Packagist, cukup:
+1. **Via Packagist**
 
-composer require alfian/indo-date-format
+   ```bash
+   composer require alfian/indo-date-format
+   ```
 
-(Opsional) Jika belum auto-discoverable, daftarkan ServiceProvider di config/app.php:
+2. **Via Path Repository** (local development)
 
-'providers' => [
-    // ...
-    Alfian\IndoDateFormat\IndoDateServiceProvider::class,
-],
+   - Tambahkan di `composer.json` proyek:
+     ```json
+     "repositories": [
+       {
+         "type": "path",
+         "url": "./packages/alfian/indo-date-format"
+       }
+     ]
+     ```
+   - Jalankan:
+     ```bash
+     composer require alfian/indo-date-format:dev-main
+     ```
 
-Penggunaan
+3. **(Opsional)** Jika Laravel tidak auto-discover, tambahkan di `config/app.php`:
+   ```php
+   'providers' => [
+       // ...
+       Alfian\IndoDateFormat\IndoDateServiceProvider::class,
+   ],
+   ```
 
-1. Menggunakan Kelas Langsung
+---
 
+## 📖 Penggunaan
+
+### 1. Kelas Langsung
+
+```php
 use Alfian\IndoDateFormat\IndoDate;
 
-$tgl = '01/01/2025';
-echo IndoDate::format($tgl); // Output: 01 Januari 2025
+echo IndoDate::format('01/01/2025');
+// => 01 Januari 2025
+```
 
-2. Via Helper Function (jika diaktifkan)
+### 2. Helper Function
 
-Jika kamu telah menambahkan helper di composer.json:
+> Pastikan kamu menambahkan `src/helpers.php` dan mengautoload file tersebut di `composer.json`:
 
+```php
 // src/helpers.php
-if (!function_exists('indo_date')) {
+if (! function_exists('indo_date')) {
     function indo_date(string $tanggal): ?string
     {
         return Alfian\IndoDateFormat\IndoDate::format($tanggal);
     }
 }
+```
 
-Gunakan di mana saja dalam aplikasi:
+```json
+"autoload": {
+    "psr-4": {
+        "Alfian\\IndoDateFormat\\": "src/"
+    },
+    "files": [
+       "src/helpers.php"
+    ]
+}
+```
 
-echo indo_date('15/08/2025'); // Output: 15 Agustus 2025
+```bash
+composer dump-autoload
+```
 
-Konfigurasi (Opsional)
+```php
+// Gunakan di mana saja
+echo indo_date('15/08/2025');
+// => 15 Agustus 2025
+```
 
-Jika ingin mengganti delimiter atau menambahkan format lain, extend kelas IndoDate di proyekmu:
+---
 
+## ⚙️ Konfigurasi (Opsional)
+
+Kamu bisa extend kelas dasar untuk kebutuhan khusus:
+
+```php
 namespace App\Services;
 
 use Alfian\IndoDateFormat\IndoDate as BaseIndoDate;
@@ -78,21 +129,20 @@ class CustomDate extends BaseIndoDate
         return parent::format($tanggal, '-');
     }
 }
+```
 
-Contributing
+---
 
-Fork repository ini
+## 🤝 Contributing
 
-Buat feature branch (git checkout -b feature/nama-fitur)
+1. Fork repository ini
+2. Buat branch fitur: `git checkout -b feature/nama-fitur`
+3. Commit perubahan: `git commit -m 'Menambahkan fitur baru'`
+4. Push ke remote: `git push origin feature/nama-fitur`
+5. Buka Pull Request
 
-Commit perubahan (git commit -m 'Menambahkan fitur baru')
+---
 
-Push ke branch (git push origin feature/nama-fitur)
-
-Buka Pull Request
-
-Kami sangat menghargai kontribusimu! 🎉
-
-Lisensi
+## 📄 Lisensi
 
 MIT © [Alfian Maulana]
